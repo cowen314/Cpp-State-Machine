@@ -2,10 +2,11 @@
 
 /* Events */
 
-struct ConnectionRequested : tinyfsm::Event { };
+struct ConnectRequested : tinyfsm::Event { };
 struct RampToVoltageRequested : tinyfsm::Event { };  // this might carry an location with it
 struct RampToCurrentRequested : tinyfsm::Event { };  // this might carry an location with it
 struct DisconnectRequested : tinyfsm::Event { };
+struct ResetErrorRequested : tinyfsm::Event { };
 
 /* State machine */
 
@@ -16,10 +17,11 @@ class StoplightSM : tinyfsm::Fsm<StoplightSM>
         void react(tinyfsm::Event const &) { };
 
         /* Event methods */
-        virtual void react(ConnectionRequested const &);  // why are these constant address pointers?
+        virtual void react(ConnectRequested const &);  // why are these constant address pointers?
         virtual void react(RampToVoltageRequested const &);
         virtual void react(RampToCurrentRequested const &);
         virtual void react(DisconnectRequested const &);
+        virtual void react(ResetErrorRequested const &);
 
     protected:
         float voltageLimit;
@@ -27,10 +29,10 @@ class StoplightSM : tinyfsm::Fsm<StoplightSM>
         float rampTime;
 
         /* Actions */
-        virtual void Connect();
-        virtual void RampToVoltage();
-        virtual void RampToCurrent();
-        virtual void Disconnect();
+        bool Connect();
+        void RampToVoltage();
+        void RampToCurrent();
+        void Disconnect();
     
     // public:
         // float getTimerValue { return timerValue_ms; }
