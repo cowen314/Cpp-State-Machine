@@ -8,6 +8,7 @@ Review of existing designs:
     - The interface of this class is defined by the available events. There should be a version of the public react(eventType) method for each type of event. These methods should be virtual unless the handling is state-independent.
   - Create states (classes)
     - States inherit from the state machine class (this seems weird). Each state overrides react(eventType) for events where handling is state dependent
+      - states could implement a `State` interface instead, although event methods would need to added manually to the state machine class
   - Thoughts:
     - users could defined protected methods in the state machine class called “actions”.
     - users could define transitions in some arbitrary syntax (not necessarily related to C++). The syntax could be similar to what is done when defining transitions while using the transitions (python) state machine package. C++ files could be automatically generated.
